@@ -3,7 +3,7 @@ name: Verify
 on: [push]
 
 jobs:
-  build-linux:
+  test-miniALU:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,4 +28,4 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        pytest miniALU/tb
+        pytest miniALU/test
