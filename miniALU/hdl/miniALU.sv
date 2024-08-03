@@ -6,5 +6,9 @@ module miniALU(
     input  logic        select,
     output logic [19:0] result
 );
-    assign result = select ? operand1 + operand2 : operand1 << operand2;
+    if (select) begin
+        result = operand1 + operand2;
+    end else begin
+        result = operand1 << operand2;
+    end
 endmodule
