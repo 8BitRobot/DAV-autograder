@@ -41,7 +41,7 @@ jobs:
       run: |
         CONFIG_FILE=".github/workflows/test-config.yml"
         pwd
-        ls ../
+        ls -a
 
 
         if [ ! -f $CONFIG_FILE ]; then
