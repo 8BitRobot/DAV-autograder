@@ -1,6 +1,7 @@
 .venv
 .pytest_cache
 */sim_build
+**/sim_build
 */hdl/*.solution
 **/__pycache__
 results
