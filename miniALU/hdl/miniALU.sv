@@ -1,3 +1,5 @@
+`timescale 1ns/1ns
+
 module miniALU (
     // TODO: define your input and output ports
     input logic [3:0] op1,
