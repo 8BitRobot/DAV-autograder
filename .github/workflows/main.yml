@@ -36,10 +36,10 @@ jobs:
         pip3 install -r requirements.txt
         sudo apt install -y --no-install-recommends iverilog
 
-    - name: Load Test Configuartion from Branch
+    - name: Load Test Configuration from Branch
       id: load-config
       run: |
-        if [ ! -f test-config.yml ]; then
+        if [ ! -f ./.github/workflows/test-config.yml ]; then
           echo "test-config.yml not found in branch."
           exit 1
         fi
