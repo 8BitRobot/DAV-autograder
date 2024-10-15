@@ -39,10 +39,13 @@ jobs:
     - name: Load Test Configuration from Branch
       id: load-config
       run: |
+        CONFIG_FILE=".github/workflows/test-config.yml"
         pwd
+        ls
 
-        if [ ! -f test-config.yml ]; then
-          echo "test-config.yml not found in branch."
+
+        if [ ! -f $CONFIG_FILE ]; then
+          echo "$CONFIG_FILE not found in branch."
           exit 1
         fi
 
