@@ -9,7 +9,7 @@ module miniALU (
     output logic [19:0] result
     );
 
-    // The following block contains the logic of your combinational circuit
+    // The following block will contain the logic of your combinational circuit
     always_comb begin
         // TODO: write the logic for your miniALU here
         if (~operation & ~sign) begin
