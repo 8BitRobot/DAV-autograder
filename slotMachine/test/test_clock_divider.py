@@ -1,6 +1,7 @@
 import cocotb
 import cocotb.triggers
 import cocotb.clock
+import cocotb.result
 import random
 
 import cocotb.utils
@@ -14,7 +15,6 @@ async def clockDivider_tb(dut):
     period_50MHz = 20
 
     clk_50MHz = cocotb.clock.Clock(dut.clk, period_50MHz, 'ns')
-    print("hello")
     await cocotb.start(clk_50MHz.start())
 
     # 25 MHz clock period
@@ -25,7 +25,12 @@ async def clockDivider_tb(dut):
     prev_time = None
     
     for i in range(10):
-        await cocotb.triggers.RisingEdge(dut.clk_div)
+        rising_edge_trigger = cocotb.triggers.RisingEdge(dut.clk_div)
+        try:
+            await cocotb.triggers.with_timeout(rising_edge_trigger, 2000, 'ns')
+        except cocotb.result.SimTimeoutError:
+            assert False, f"Clock divider did not generate a valid clock"
+        
         current_sim_time = cocotb.utils.get_sim_time()
         if prev_time != None:
             assert prev_time + period_25MHz == current_sim_time, f"Failed to generate clock with period {period_25MHz}ns"
@@ -39,14 +44,19 @@ async def clockDivider_tb(dut):
     prev_time = None
     
     for i in range(10):
-        await cocotb.triggers.RisingEdge(dut.clk_div)
+        rising_edge_trigger = cocotb.triggers.RisingEdge(dut.clk_div)
+        try:
+            await cocotb.triggers.with_timeout(rising_edge_trigger, 2000, 'ns')
+        except cocotb.result.SimTimeoutError:
+            assert False, f"Clock divider did not generate a valid clock"
+        
         current_sim_time = cocotb.utils.get_sim_time()
         if prev_time != None:
             assert prev_time + period_10MHz == current_sim_time, f"Failed to generate clock with period {period_10MHz}ns"
         prev_time = current_sim_time
 
 
-def test_miniALU():
+def test_clock_divider():
     run(
         verilog_sources=glob.glob('slotMachine/hdl/*.sv'),
         toplevel="clock_divider",

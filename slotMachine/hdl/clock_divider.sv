@@ -6,6 +6,6 @@ module clock_divider #( parameter MAX_SPEED = 50000000 ) (
 	output reg clk_div		//	output clk signal
 );
 
-assign clk_div = 1;
+	assign clk_div = 1;
 
 endmodule
