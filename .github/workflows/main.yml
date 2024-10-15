@@ -16,8 +16,8 @@ jobs:
         ref: ${{ github.ref }}
 
     - run: |
-        git fetch origin refs/heads/team-0
-        git clone --branch refs/heads/team-0 --single-branch . /tmp/team-0-branch
+        git fetch origin team-0
+        git clone --branch team-0 --single-branch https://github.com/8BitRobot/DAV-autograder.git /tmp/team-0-branch
 
     - uses: actions/cache@v3
       with:
