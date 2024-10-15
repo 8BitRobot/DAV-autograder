@@ -1,4 +1,3 @@
-`timescale 1ns/1ns
 module miniALU (
     // TODO: define your input and output ports
     input logic [3:0] op1,
@@ -8,5 +7,17 @@ module miniALU (
     output logic [19:0] result
     );
 
-    assign result = 'd1;
+    // The following block contains the logic of your combinational circuit
+    always_comb begin
+        // TODO: write the logic for your miniALU here
+        if (~operation & ~sign) begin
+            result <= op1 + op2;
+        end else if (~operation & sign) begin
+            result <= op1 - op2;
+        end else if (operation & ~sign) begin
+            result <= op1 << op2;
+        end else begin
+            result <= op1 >> op2;
+        end
+    end
 endmodule
