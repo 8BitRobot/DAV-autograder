@@ -36,6 +36,23 @@ jobs:
         pip3 install -r requirements.txt
         sudo apt install -y --no-install-recommends iverilog
 
+    - name: Load Test Configuartion from Branch
+      id: load-config
+      run: |
+        if [ ! -f test-config.yml ]; then
+          echo "test-config.yml not found in branch."
+          exit 1
+        fi
+
+        if ! [ -x "$(command -v yq)" ]; then
+          sudo apt-get update && sudo apt-get install -y yq
+        fi
+
+        TEST-FILES=$(yq eval ".tests" test-config.yml | sed ':a;N;$!ba;s/\n/ /g')
+
+        echo "::set-output name=test_files::$TEST_FILES"
+
     - name: Verify with cocotb & icarus
       run: |
-        pytest --pyargs /tmp/team-0-branch/miniALU/test
+        TEST_FILES="${{ steps.load-config.outputs.test_files }}"
+        pytest --pyargs "/tmp/team-0-branch/$TEST_FILES"
