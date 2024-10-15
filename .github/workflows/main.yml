@@ -12,6 +12,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with: 
+        ref: ${{ github.ref }}
+
+    - run: |
+        git fetch origin team-0
+        git clone --branch team-0 --single-branch . /tmp/team-0-branch
 
     - uses: actions/cache@v3
       with:
@@ -32,4 +38,4 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        pytest miniALU/test
+        pytest --pyargs /tmp/team-0-branch/miniALU/test
