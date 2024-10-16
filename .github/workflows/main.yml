@@ -46,11 +46,13 @@ jobs:
           exit 1
         fi
 
-        TEST_FILES=$(sed -e 's$^$/tmp/team-0-branch/$' $CONFIG_FILE | tr '\n' ' ')
+        cd /tmp/team-0/branch/
+        ls -a
+        TEST_FILEStr =$('\n' ' ' <$CONFIG_FILE)
 
         echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
 
     - name: Verify with cocotb & icarus
       run: |
-        echo "running tests in: $TEST_FILEPATH"
+        echo "running tests: $TEST_FILEPATH"
         pytest "$TEST_FILEPATH"
