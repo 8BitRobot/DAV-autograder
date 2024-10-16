@@ -47,7 +47,7 @@ jobs:
           exit 1
         fi
 
-        TEST-FILES=$(yq r "$CONFIG_FILE" 'tests[*]' | tr '\n' ' ')
+        TEST-FILES=$(yq eval '.tests' $CONFIG_FILE | tr '\n' ' ')
 
         echo "::set-output name=test_files::/tmp/team-0-branch/$TEST_FILES"
 
