@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`timescale 1ns/1ns		//	This line is necessary for the auto-grader. Feel free to remove when you assemble with the FPGA.
 module clock_divider #( parameter MAX_SPEED = 50000000 ) (
 	//	Inputs and outputs go here. 1-bit input "clk", 26-bit input "speed", 1-bit input "rst", and 1-bit output "clk_div". 
 	//	Which inputs are wires, which are regs?
