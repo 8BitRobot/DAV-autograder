@@ -39,9 +39,9 @@ jobs:
     - name: Load Test Configuration from Branch
       id: load-config
       run: |
-        CONFIG_FILE=".github/workflows/test-config.yml"
+        CONFIG_FILE="./.github/workflows/test-config.yml"
         pwd
-        ls ./.github/workflows
+        ls ./.github/workflows/test-config.yml
 
 
         if [ ! -f $CONFIG_FILE ]; then
