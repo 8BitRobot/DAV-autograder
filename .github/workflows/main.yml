@@ -48,8 +48,9 @@ jobs:
 
         TEST_FILES="`tr '\n' ' ' <$CONFIG_FILE`"
 
-        echo "{TEST_FILEPATH}={/tmp/team-0-branch/$TEST_FILES}" >> $GITHUB_ENV
+        echo "TEST_FILEPATH=/tmp/team-0-branch/$TEST_FILES" >> $GITHUB_ENV
 
     - name: Verify with cocotb & icarus
       run: |
+        echo "$TEST_FILEPATH"
         pytest --pyargs "$TEST_FILEPATH"
