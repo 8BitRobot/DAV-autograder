@@ -46,7 +46,7 @@ jobs:
           exit 1
         fi
 
-        TEST-FILES="tr '\n' ' ' <$CONFIG_FILE"
+        TEST_FILES="`tr '\n' ' ' <$CONFIG_FILE`"
 
         echo "::set-output name=test_files::/tmp/team-0-branch/$TEST_FILES"
 
