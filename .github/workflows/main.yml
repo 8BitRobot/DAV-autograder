@@ -48,12 +48,8 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-<<<<<<< HEAD
-        pytest miniALU/test slotMachine/test
-=======
         git fetch origin test-files
         git clone --branch test-files --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/
         cp -r --update=none ./tmp/* .
         echo "running tests in: $TEST_FILEPATH"
         pytest $TEST_FILEPATH
->>>>>>> c5c4f77e0bb92d1073b756cee391e9877bfcd0dd
