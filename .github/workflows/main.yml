@@ -35,6 +35,7 @@ jobs:
       run: |
         pip3 install -r requirements.txt
         sudo apt install -y --no-install-recommends iverilog
+        sudo apt install -y yq
 
     - name: Load Test Configuration from Branch
       id: load-config
@@ -44,10 +45,6 @@ jobs:
         if [ ! -f $CONFIG_FILE ]; then
           echo "$CONFIG_FILE not found in branch."
           exit 1
-        fi
-
-        if ! [ -x "$(command -v yq)" ]; then
-          sudo apt-get update && sudo apt-get install -y yq
         fi
 
         TEST-FILES=$(yq eval ".tests" $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
