@@ -13,7 +13,7 @@ module miniALU (
     always_comb begin
         // TODO: write the logic for your miniALU here
         if (~operation & ~sign) begin
-            result = op1 + op2;
+            result = op1 + op2;     //  test
         end else if (~operation & sign) begin
             result = op1 - op2;
         end else if (operation & ~sign) begin
