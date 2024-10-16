@@ -7,7 +7,7 @@ on:
       - '!main'
 
 jobs:
-  test-miniALU:
+  grade-labs:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,4 +38,4 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        pytest --pyargs /tmp/team-0-branch/miniALU/test
+        pytest /tmp/team-0-branch/miniALU/test /tmp/team-0-branch/slotMachine/test
