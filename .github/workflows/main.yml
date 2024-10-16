@@ -35,7 +35,7 @@ jobs:
       run: |
         pip3 install -r requirements.txt
         sudo apt install -y --no-install-recommends iverilog
-        sudo apt install -y yq
+        sudo apt install -y yq=4.24.2
 
     - name: Load Test Configuration from Branch
       id: load-config
@@ -47,7 +47,7 @@ jobs:
           exit 1
         fi
 
-        TEST-FILES=$(yq 'tests[]' $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
+        TEST-FILES=$(yq '.tests[]' $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
 
         echo "::set-output name=test_files::$TEST_FILES"
 
