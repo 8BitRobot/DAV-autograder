@@ -46,10 +46,9 @@ jobs:
           exit 1
         fi
 
-        KEY_PATH="/tmp/team-0-branch/"
-        TEST_FILES=$(sed -e 's/^/$KEY_PATH/' $CONFIG_FILE | tr '\n' ' ')
+        TEST_FILES=$(sed -e 's/^//tmp/team-0-branch//' $CONFIG_FILE | tr '\n' ' ')
 
-        echo "TEST_FILEPATH=/tmp/team-0-branch/$TEST_FILES" >> $GITHUB_ENV
+        echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
 
     - name: Verify with cocotb & icarus
       run: |
