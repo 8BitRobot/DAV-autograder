@@ -47,7 +47,7 @@ jobs:
           exit 1
         fi
 
-        TEST-FILES=$(yq read $CONFIG_FILE 'tests[]' | sed ':a;N;$!ba;s/\n/ /g')
+        TEST-FILES=$(yq 'tests[]' $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
 
         echo "::set-output name=test_files::$TEST_FILES"
 
