@@ -15,10 +15,6 @@ jobs:
       with: 
         ref: ${{ github.ref }}
 
-    - run: |
-        git fetch origin team-0
-        git clone --branch team-0 --single-branch . /tmp/team-0-branch
-
     - uses: actions/cache@v3
       with:
         path: ~/.cache/pip
@@ -38,4 +34,4 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        pytest /tmp/team-0-branch/miniALU/test /tmp/team-0-branch/slotMachine/test
+        pytest miniALU/test slotMachine/test
