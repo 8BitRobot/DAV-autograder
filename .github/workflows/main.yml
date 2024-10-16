@@ -34,9 +34,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip3 install -r requirements.txt
-        sudo apt-get update
         sudo apt install -y --no-install-recommends iverilog
-        sudo apt-get install -y yq
+        sudo apt install -y yq
 
     - name: Load Test Configuration from Branch
       id: load-config
@@ -48,11 +47,11 @@ jobs:
           exit 1
         fi
 
-        TEST-FILES=$(yq '.tests[]' $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
+        TEST-FILES=$(yq r "$CONFIG_FILE" 'tests[*]' | tr '\n' ' ')
 
-        echo "::set-output name=test_files::$TEST_FILES"
+        echo "::set-output name=test_files::/tmp/team-0-branch/$TEST_FILES"
 
     - name: Verify with cocotb & icarus
       run: |
         TEST_FILES="${{ steps.load-config.outputs.test_files }}"
-        pytest --pyargs "/tmp/team-0-branch/$TEST_FILES"
+        pytest --pyargs "$TEST_FILES"
