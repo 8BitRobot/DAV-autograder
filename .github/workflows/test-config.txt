@@ -1,2 +1,2 @@
-miniALU/test
-slotMachine/test
+miniALU
+slotMachine
