@@ -47,7 +47,7 @@ jobs:
         fi
 
         KEY_PATH="/tmp/team-0-branch/"
-        TEST_FILES=`sed "s/^/$KEY_PATH/" "$CONFIG_FILE" | tr '\n' ' '`
+        TEST_FILES=$(sed "s/^/$KEY_PATH/" "$CONFIG_FILE" | tr '\n' ' ')
 
         echo "TEST_FILEPATH=/tmp/team-0-branch/$TEST_FILES" >> $GITHUB_ENV
 
