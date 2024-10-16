@@ -46,7 +46,7 @@ jobs:
           exit 1
         fi
 
-        TEST_FILES=$(sed -e 's/^/"/tmp/team-0-branch/"/' $CONFIG_FILE | tr '\n' ' ')
+        TEST_FILES=$(sed -e 's$^$/tmp/team-0-branch/$' $CONFIG_FILE | tr '\n' ' ')
 
         echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
 
