@@ -52,6 +52,6 @@ jobs:
         git clone --branch team-0 --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/team-0-branch
         cd ./tmp/team-0-branch
         rm miniALU/hdl/* slotMachine/hdl/*
-        mv ./../../miniALU/hdl/* miniALU/hdl/ && mv ./../../slotMachine/hdl/* slotMachine/hdl/
+        cp ./../../miniALU/hdl/* miniALU/hdl/ && cp ./../../slotMachine/hdl/* slotMachine/hdl/
         echo "running tests in: $TEST_FILEPATH"
         pytest $TEST_FILEPATH
