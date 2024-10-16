@@ -32,7 +32,7 @@ jobs:
           exit 1
         fi
 
-        TEST_FILES=`sed -e 's%$%/test%' '$CONFIG_FILE' | tr '\n' ' '`
+        TEST_FILES=`sed -e 's%$%/test%' $CONFIG_FILE | tr '\n' ' '`
 
         echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
     
@@ -50,6 +50,6 @@ jobs:
       run: |
         git fetch origin team-0
         git clone --branch team-0 --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/
-        cp -r -n ./tmp/ .
+        cp -r --update=none ./tmp/ .
         echo "running tests in: $TEST_FILEPATH"
         pytest $TEST_FILEPATH
