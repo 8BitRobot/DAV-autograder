@@ -8,5 +8,17 @@ module miniALU (
     output logic [19:0] result
     );
 
-    assign result = 'd1;
+    // The following block contains the logic of your combinational circuit
+    always_comb begin
+        // TODO: write the logic for your miniALU here
+        if (~operation & ~sign) begin
+            result <= op1 + op2;
+        end else if (~operation & sign) begin
+            result <= op1 - op2;
+        end else if (operation & ~sign) begin
+            result <= op1 << op2;
+        end else begin
+            result <= op1 >> op2;
+        end
+    end
 endmodule
