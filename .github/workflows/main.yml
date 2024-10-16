@@ -34,8 +34,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip3 install -r requirements.txt
+        sudo apt-get update
         sudo apt install -y --no-install-recommends iverilog
-        sudo apt install -y yq=4.24.2
+        sudo apt-get install -y yq
 
     - name: Load Test Configuration from Branch
       id: load-config
