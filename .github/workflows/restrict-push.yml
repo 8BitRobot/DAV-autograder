@@ -26,6 +26,7 @@ jobs:
         echo "::set-output name=creator::$branch_creator"
     
     - name: Check if pusher is branch creator
+      id: check_push
       run: |
         pusher_name="${{ github.actor }}"
         branch_creator="${{ steps.branch_creator.outputs.creator }}"
@@ -34,8 +35,26 @@ jobs:
         echo "Branch Creator: $branch_creator"
         
         if [[ "$pusher_name" != "$branch_creator" ]]; then
-          echo "You are not the creator of this branch. Push is not allowed."
+          echo "You are not the creator of this branch. Reverting the push."
           exit 1
         else
           echo "You are the branch creator. Push is allowed."
         fi
+
+    - name: Revert the commit if pusher is not the branch creator
+      if: failure()  # This step runs only if the previous step failed
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "actions@github.com"
+        
+        # Fetch the latest branch changes
+        git fetch origin
+        
+        # Checkout the branch the pusher committed to
+        git checkout ${{ steps.branch_name.outputs.branch }}
+        
+        # Revert the last commit
+        git revert --no-edit HEAD
+        
+        # Push the revert commit
+        git push origin HEAD:${{ steps.branch_name.outputs.branch }}
