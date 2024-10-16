@@ -46,7 +46,8 @@ jobs:
           exit 1
         fi
 
-        cd /tmp/team-0/branch/
+        ls -a
+        cd ./tmp/team-0/branch/
         ls -a
         TEST_FILEStr =$('\n' ' ' <$CONFIG_FILE)
 
