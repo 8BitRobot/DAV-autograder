@@ -51,6 +51,5 @@ jobs:
         git fetch origin team-0
         git clone --branch team-0 --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/
         cp -r --update=none ./tmp/* .
-        find . | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
         echo "running tests in: $TEST_FILEPATH"
         pytest $TEST_FILEPATH
