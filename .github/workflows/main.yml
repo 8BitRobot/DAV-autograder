@@ -53,5 +53,9 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
+        git fetch origin team-0
+        git clone --branch team-0 --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/team-0-branch
+        cd ./tmp/team-0-branch
+        ls -a -R
         echo "running tests in: $TEST_FILEPATH"
         pytest "$TEST_FILEPATH"
