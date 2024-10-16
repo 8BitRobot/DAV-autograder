@@ -1,9 +1,8 @@
 `timescale 1ns/1ns
 module clock_divider #( parameter MAX_SPEED = 50000000 ) (
-	input clk,					//	input clk signal
-	input [25:0] speed,
-	input rst,
-	output reg clk_div		//	output clk signal
+	//	Inputs and outputs go here. 1-bit input "clk", 26-bit input "speed", 1-bit input "rst", and 1-bit output "clk_div". 
+	//	Which inputs are wires, which are regs?
+	input clk					//	input clk signal
 );
 
 reg [25:0] count = 0;															//	count num pos edges
@@ -13,14 +12,13 @@ reg [25:0] DIVISOR = 0;															//	Max count before clk signal repeats
 reg [1:0] rst_sr = 2'b00;
 
 always @(posedge clk) begin													//	Activates on pos clk edge
-	count <= (count >= DIVISOR - 1 || rst_sr == 2'b01) ? 0 : count + 1;	//	Update counter
-	clk_div <= (count < DIVISOR / 2) ? 1 : 0;								//	High/low edge    change left 0 to 1
-	DIVISOR <= NEW_DIVISOR;
-	rst_sr <= {rst_sr[0], rst};
+//	You will be assigning a new value to your counter sequentially; what are the criteria to update the counter? When should it reset?
+//	Your output will be either 0 or 1, depending on your counter value. If it's under half the maximum, output is 1, else 0, or vice versa.
+//	Use a shift register to capture a button press!
 end
 
 always_comb begin
-	NEW_DIVISOR = MAX_SPEED / speed;
+//	This block is for any variable that updates instantly based on the input values.
 end
 
 endmodule
