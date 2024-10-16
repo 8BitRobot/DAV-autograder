@@ -14,7 +14,7 @@ reg [1:0] rst_sr = 2'b00;
 
 always @(posedge clk) begin													//	Activates on pos clk edge
 	count <= (count >= DIVISOR - 1 || rst_sr == 2'b01) ? 0 : count + 1;	//	Update counter
-	clk_div <= (count < DIVISOR / 2) ? 0 : 0;								//	High/low edge CHANGE LEFT 0 TO 1
+	clk_div <= (count < DIVISOR / 2) ? 1 : 0;								//	High/low edge 
 	DIVISOR <= NEW_DIVISOR;
 	rst_sr <= {rst_sr[0], rst};
 end
