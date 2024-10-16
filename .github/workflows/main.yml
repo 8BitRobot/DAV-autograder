@@ -21,11 +21,25 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
+    - name: Load Test Configuration from Branch
+      id: load-config
+      run: |
+        CONFIG_FILE="./.github/workflows/test-config.txt"
+
+        if [ ! -f $CONFIG_FILE ]; then
+          echo "$CONFIG_FILE not found in branch."
+          exit 1
+        fi
+
+        TEST_FILES=`sed -e 's%$%/test%' $CONFIG_FILE | tr '\n' ' '`
+
+        echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
     
-    - name: Set up Python 3.9
+    - name: Set up Python 3.11.1
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.11.1
 
     - name: Install dependencies
       run: |
@@ -34,4 +48,12 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
+<<<<<<< HEAD
         pytest miniALU/test slotMachine/test
+=======
+        git fetch origin test-files
+        git clone --branch test-files --single-branch https://github.com/8BitRobot/DAV-autograder.git ./tmp/
+        cp -r --update=none ./tmp/* .
+        echo "running tests in: $TEST_FILEPATH"
+        pytest $TEST_FILEPATH
+>>>>>>> c5c4f77e0bb92d1073b756cee391e9877bfcd0dd
