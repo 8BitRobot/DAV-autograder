@@ -1,0 +1,41 @@
+name: Restrict Push by Branch Creator
+
+on:
+  push:
+    branches:
+      - '*'  # Trigger on all branches
+
+jobs:
+  restrict_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get branch name
+      id: branch_name
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      
+    - name: Get branch creator
+      id: branch_creator
+      run: |
+        branch_name=$(echo "${{ steps.branch_name.outputs.branch }}")
+        repo_url="https://api.github.com/repos/${{ github.repository }}/commits?sha=$branch_name"
+        
+        # Fetch the first commit of the branch to get the creator
+        first_commit_sha=$(curl -s "$repo_url" | jq -r '.[-1].sha')
+        branch_creator=$(curl -s "https://api.github.com/repos/${{ github.repository }}/commits/$first_commit_sha" | jq -r '.commit.author.name')
+        echo "::set-output name=creator::$branch_creator"
+    
+    - name: Check if pusher is branch creator
+      run: |
+        pusher_name="${{ github.actor }}"
+        branch_creator="${{ steps.branch_creator.outputs.creator }}"
+        
+        echo "Pusher: $pusher_name"
+        echo "Branch Creator: $branch_creator"
+        
+        if [[ "$pusher_name" != "$branch_creator" ]]; then
+          echo "You are not the creator of this branch. Push is not allowed."
+          exit 1
+        else
+          echo "You are the branch creator. Push is allowed."
+        fi
