@@ -52,5 +52,5 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        TEST_FILES="${{ steps.load-config.outputs.test_files }}"
+        TEST_FILES="$GITHUB_OUTPUT"
         pytest --pyargs "$TEST_FILES"
