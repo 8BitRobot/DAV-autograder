@@ -52,5 +52,5 @@ jobs:
 
     - name: Verify with cocotb & icarus
       run: |
-        echo "$TEST_FILEPATH"
+        echo "running tests in: $TEST_FILEPATH"
         pytest --pyargs "$TEST_FILEPATH"
