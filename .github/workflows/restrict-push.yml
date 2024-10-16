@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
     - name: Get branch name
       id: branch_name
       run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
-      
+
     - name: Get branch creator
       id: branch_creator
       run: |
-        branch_name=$(echo "${{ steps.branch_name.outputs.branch }}")
+        branch_name="${{ steps.branch_name.outputs.branch }}"
         repo_url="https://api.github.com/repos/${{ github.repository }}/commits?sha=$branch_name"
         
         # Fetch the first commit of the branch to get the creator
