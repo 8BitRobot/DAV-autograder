@@ -25,16 +25,6 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
-    
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-
-    - name: Install dependencies
-      run: |
-        pip3 install -r requirements.txt
-        sudo apt install -y --no-install-recommends iverilog
 
     - name: Load Test Configuration from Branch
       id: load-config
@@ -46,14 +36,21 @@ jobs:
           exit 1
         fi
 
-        ls -a
-        cd ./tmp/team-0/branch/
-        ls -a
-        TEST_FILEStr =$('\n' ' ' <$CONFIG_FILE)
+        TEST_FILES=`sed -e 's$^$/tmp/team-0-branch/$' $CONFIG_FILE | tr '\n' ' '`
 
         echo "TEST_FILEPATH=$TEST_FILES" >> $GITHUB_ENV
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        pip3 install -r requirements.txt
+        sudo apt install -y --no-install-recommends iverilog
 
     - name: Verify with cocotb & icarus
       run: |
-        echo "running tests: $TEST_FILEPATH"
+        echo "running tests in: $TEST_FILEPATH"
         pytest "$TEST_FILEPATH"
