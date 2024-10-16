@@ -58,4 +58,4 @@ jobs:
         cd ./tmp/team-0-branch
         ls -a -R
         echo "running tests in: $TEST_FILEPATH"
-        pytest "$TEST_FILEPATH"
+        pytest
