@@ -40,9 +40,6 @@ jobs:
       id: load-config
       run: |
         CONFIG_FILE="./.github/workflows/test-config.yml"
-        pwd
-        ls ./.github/workflows/test-config.yml
-
 
         if [ ! -f $CONFIG_FILE ]; then
           echo "$CONFIG_FILE not found in branch."
@@ -53,7 +50,7 @@ jobs:
           sudo apt-get update && sudo apt-get install -y yq
         fi
 
-        TEST-FILES=$(yq eval ".tests" test-config.yml | sed ':a;N;$!ba;s/\n/ /g')
+        TEST-FILES=$(yq eval ".tests" $CONFIG_FILE | sed ':a;N;$!ba;s/\n/ /g')
 
         echo "::set-output name=test_files::$TEST_FILES"
 
